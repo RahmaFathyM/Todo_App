@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Splash"
-    android:background="#E8E7E7">
+    android:background="@color/colorPrimaryDark">
     <TextView
 android:id="@+id/splas_text"
         android:layout_width="wrap_content"

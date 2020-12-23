@@ -8,44 +8,57 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-   Button btn_add;
-
+    Button btn_add;
+    NoteDataBase noteDataBase;
+    ArrayList<TodoElement> todo_Array;
+    Rec_todoList rec_todoList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.rec);
-       btn_add = findViewById(R.id.btn_add);
+        noteDataBase = new NoteDataBase(MainActivity.this);
+        btn_add = findViewById(R.id.btn_add);
         RecyclerView.LayoutManager layoutManage;
         recyclerView.setHasFixedSize(true);
         layoutManage = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManage);
-        ArrayList<todoElement> todo_Array = new ArrayList<todoElement>();
-        todo_Array.add(new todoElement("study", "12:00"));
-        todo_Array.add(new todoElement("sleep", "12:30"));
-        todo_Array.add(new todoElement("read", "12:20"));
-        todo_Array.add(new todoElement("study", "12:11"));
-        todo_Array.add(new todoElement("prayer", "12:00"));
-        todo_Array.add(new todoElement("sleep", "12:30"));
-        todo_Array.add(new todoElement("study", "12:00"));
-        todo_Array.add(new todoElement("sleep", "12:30"));
-        todo_Array.add(new todoElement("read", "12:20"));
-        todo_Array.add(new todoElement("study", "12:11"));
-        todo_Array.add(new todoElement("prayer", "12:00"));
-        todo_Array.add(new todoElement("sleep", "12:30"));
-        Rec_todoList rec_todoList = new Rec_todoList(this, todo_Array);
+        todo_Array = new ArrayList<>();
+        todo_Array = noteDataBase.getAllNotes();
+        rec_todoList = new Rec_todoList(this, todo_Array, new OnClickListener_notes() {
+            @Override
+            public void onClick(int id) {
+                TodoElement todoElement = todo_Array.get(id);
+                Intent i = new Intent(MainActivity.this, Add.class);
+                i.putExtra("text", todoElement.getTodo_Text());
+                i.putExtra("time", todoElement.getTodo_Time());
+                startActivity(i);
+            }
+
+            @Override
+            public void onClick_image(int i) {
+                noteDataBase.deleteNote(i);
+                todo_Array.remove(todo_Array.get(i));
+                rec_todoList.notifyItemRemoved(i);
+                rec_todoList.notifyDataSetChanged();
+
+            }
+        });
         recyclerView.setAdapter(rec_todoList);
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Add.class);
+                Intent intent = new Intent(MainActivity.this, Add.class);
+                intent.putExtra("text", "");
+                intent.putExtra("time", "");
+                startActivity(intent);
                 startActivity(intent);
             }
         });
