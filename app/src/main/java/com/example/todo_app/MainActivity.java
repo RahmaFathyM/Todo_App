@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick_image(int i) {
-                noteDataBase.deleteNote(i);
+
+                noteDataBase.deleteNote(todo_Array.get(i).getTodo_id());
+//                Toast.makeText(MainActivity.this,"delete" +todo_Array.get(i).getTodo_id(),Toast.LENGTH_SHORT).show();
                 todo_Array.remove(todo_Array.get(i));
                 rec_todoList.notifyItemRemoved(i);
                 rec_todoList.notifyDataSetChanged();
