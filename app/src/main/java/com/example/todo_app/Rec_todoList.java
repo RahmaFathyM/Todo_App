@@ -16,7 +16,7 @@ public class Rec_todoList extends RecyclerView.Adapter<Rec_todoList.ViewHolderTo
     private OnClickListener_notes onClickListener_notes;
 
 
-    public Rec_todoList(Context context, ArrayList<TodoElement> arrayList, OnClickListener_notes onClickListener_notes) {
+    public Rec_todoList( ArrayList<TodoElement> arrayList, OnClickListener_notes onClickListener_notes) {
         this.onClickListener_notes = onClickListener_notes;
         this.arrayList = arrayList;
     }

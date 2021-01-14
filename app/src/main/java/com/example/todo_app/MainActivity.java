@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManage);
         todo_Array = new ArrayList<>();
         todo_Array = noteDataBase.getAllNotes();
-        rec_todoList = new Rec_todoList(this, todo_Array, new OnClickListener_notes() {
+        rec_todoList = new Rec_todoList( todo_Array, new OnClickListener_notes() {
             @Override
             public void onClick(int id) {
                 TodoElement todoElement = todo_Array.get(id);
